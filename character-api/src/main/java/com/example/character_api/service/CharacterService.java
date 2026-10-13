@@ -1,5 +1,8 @@
-package com.csc340.character_api.characters;
+package com.example.character_api.service;
 
+import com.example.character_api.CharacterNotFoundException;
+import com.example.character_api.model.GhibliCharacter;
+import com.example.character_api.repository.CharacterRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
