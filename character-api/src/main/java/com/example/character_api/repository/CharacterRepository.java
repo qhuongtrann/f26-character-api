@@ -1,5 +1,5 @@
-package com.csc340.character_api.characters;
-
+package com.example.character_api.repository;
+import com.example.character_api.model.GhibliCharacter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 

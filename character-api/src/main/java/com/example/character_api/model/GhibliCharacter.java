@@ -1,4 +1,4 @@
-package com.csc340.character_api.characters;
+package com.example.character_api.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

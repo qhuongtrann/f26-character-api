@@ -1,4 +1,4 @@
-package com.csc340.character_api.characters;
+package com.example.character_api;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

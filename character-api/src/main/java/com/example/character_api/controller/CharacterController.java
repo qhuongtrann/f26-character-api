@@ -1,53 +1,64 @@
-package com.csc340.character_api.characters;
+package com.example.character_api.controller;
 
+import com.example.character_api.model.GhibliCharacter;
+import com.example.character_api.repository.CharacterRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import jakarta.validation.Valid;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/characters")
-public class CharacterController 
-{
+public class CharacterController {
 
-    private final CharacterService service;
-
-    public CharacterController(CharacterService service) 
-    {
-        this.service = service;
-    }
+    @Autowired
+    private CharacterRepository repository;
 
     @GetMapping
-    public List<GhibliCharacter> list(@RequestParam(required = false) String name, @RequestParam(required = false) String universe) 
+    public List<GhibliCharacter> getAllCharacters() 
     {
-        return service.search(name, universe);
+        return repository.findAll();
     }
 
     @GetMapping("/{id}")
-    public GhibliCharacter get(@PathVariable Long id) 
+    public ResponseEntity<GhibliCharacter> getCharacterById(@PathVariable Long id) 
     {
-        return service.findById(id);
+        GhibliCharacter character = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Character not found with id " + id));
+        return ResponseEntity.ok(character);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public GhibliCharacter create(@Valid @RequestBody GhibliCharacter character) 
+    public GhibliCharacter createCharacter(@RequestBody GhibliCharacter character) 
     {
-        return service.create(character);
+        return repository.save(character);
     }
 
     @PutMapping("/{id}")
-    public GhibliCharacter update(@PathVariable Long id, @Valid @RequestBody GhibliCharacter character) 
+    public ResponseEntity<GhibliCharacter> updateCharacter(@PathVariable Long id, @RequestBody GhibliCharacter characterDetails) 
     {
-        return service.update(id, character);
+        GhibliCharacter character = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Character not found with id " + id));
+        
+        character.setName(characterDetails.getName());
+        character.setUniverse(characterDetails.getUniverse());
+        character.setRole(characterDetails.getRole());
+        character.setImageUrl(characterDetails.getImageUrl());
+        character.setDescription(characterDetails.getDescription());
+        character.setActiveDate(characterDetails.getActiveDate());
+
+        GhibliCharacter updatedCharacter = repository.save(character);
+        return ResponseEntity.ok(updatedCharacter);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) 
+    public void deleteCharacter(@PathVariable Long id) 
     {
-        service.delete(id);
+        repository.deleteById(id);
     }
 
     @GetMapping("/pulse")
