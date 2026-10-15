@@ -23,4 +23,4 @@ A Spring Boot REST API for managing and querying characters from various Ghibli 
 | **GET** | `/api/characters/pulse` | Health check endpoint |
 
 ## Deployed Application
-* **Render API URL:** `https://your-render-app-url.onrender.com`
+* **Render API URL:** `https://f26-character-api-1.onrender.com/`

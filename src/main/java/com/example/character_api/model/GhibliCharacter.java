@@ -17,14 +17,11 @@ public class GhibliCharacter {
 
     @NotBlank
     private String universe;
-
     private String role;
-
     private String imageUrl;
 
     @NotBlank
     private String description;
-
     private LocalDate activeDate;
 
     public GhibliCharacter() 
